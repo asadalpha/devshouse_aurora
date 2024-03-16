@@ -47,6 +47,12 @@ dependencies:
   music_visualizer: ^1.0.4
   provider: ^6.0.5
 
+  provider: ^6.0.5
+
+  music_visualizer: ^1.0.4
+  
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
