@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aurora/painter/coordinates.dart';
 import 'package:aurora/painter/detectorView.dart';
 import 'package:aurora/tts_service.dart';
 import 'package:camera/camera.dart';
@@ -23,6 +24,7 @@ class _ObjectDetectorView extends State<NavigationScreen> {
   String? _text;
   var _cameraLensDirection = CameraLensDirection.back;
   int _option = 0;
+  int count = 0;
   List<String> _detectedObjectNames = [];
   final TTSService _ttsService = TTSService(); //
   final _options = {
@@ -38,7 +40,6 @@ class _ObjectDetectorView extends State<NavigationScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _startTimer();
   }
@@ -48,12 +49,9 @@ class _ObjectDetectorView extends State<NavigationScreen> {
       final distinctObjectNames = _detectedObjectNames.toSet().toList();
       _detectedObjectNames = distinctObjectNames;
       final detectedObjectsString = _detectedObjectNames.join(', ');
-      _speak(detectedObjectsString);
+      _ttsService.speak(detectedObjectsString);
+      count = 0;
     }
-  }
-
-  void _speak(String text) {
-    _ttsService.speak(text);
   }
 
   @override
@@ -183,12 +181,42 @@ class _ObjectDetectorView extends State<NavigationScreen> {
     });
 
     final objects = await _objectDetector!.processImage(inputImage);
-
+    final centerX = inputImage.metadata!.size.width / 2;
     for (final object in objects) {
+      final left = translateX(
+          object.boundingBox.left,
+          inputImage.metadata!.size,
+          inputImage.metadata!.size,
+          inputImage.metadata!.rotation,
+          _cameraLensDirection);
+      final right = translateX(
+          object.boundingBox.right,
+          inputImage.metadata!.size,
+          inputImage.metadata!.size,
+          inputImage.metadata!.rotation,
+          _cameraLensDirection);
+
+      final objectCenterX = (left + right) / 2;
+      final isLeftOfCenter = objectCenterX < centerX;
+      var location = isLeftOfCenter ? 'left' : 'right';
+
       if (object.labels.isNotEmpty) {
         final label =
             object.labels.reduce((a, b) => a.confidence > b.confidence ? a : b);
-        _detectedObjectNames.add(label.text);
+        print(" confidence" + label.confidence.toString());
+        if (label.confidence > 0.40) {
+          count++;
+
+          if (count == 0) {
+            _detectedObjectNames.add('${label.text} on your $location ');
+          }
+
+          if (count > 0) {
+            Future.delayed(const Duration(seconds: 2), () {
+              _detectedObjectNames.add('${label.text} on your $location ');
+            });
+          }
+        }
       }
     }
 
@@ -214,6 +242,7 @@ class _ObjectDetectorView extends State<NavigationScreen> {
       _customPaint = null;
     }
     _isBusy = false;
+
     if (mounted) {
       setState(() {});
     }
