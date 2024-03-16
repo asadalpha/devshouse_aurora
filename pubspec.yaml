@@ -43,7 +43,12 @@ dependencies:
   path_provider: ^2.1.0
   google_ml_kit: ^0.16.3
   image_picker: ^1.0.2
+
   provider: ^6.0.5
+
+  music_visualizer: ^1.0.4
+  
+
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +74,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/
     - assets/ml/
    
 
