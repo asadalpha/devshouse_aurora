@@ -29,11 +29,10 @@ class _Screen1State extends State<Screen1> {
     // speakInstruction(
     //     "Click on the bottom portion of the screen to start detection");
 
-    Future.delayed(const Duration(seconds: 2), () {
-    speakInstruction(
-        "Click on the bottom portion of the screen to start detection");
-    } 
-        );
+    Future.delayed(const Duration(seconds: 1), () {
+      speakInstruction(
+          "Click on the bottom portion of the screen to start detection");
+    });
   }
 
   @override
@@ -74,26 +73,30 @@ class _Screen1State extends State<Screen1> {
                 MaterialPageRoute(builder: (context) => NavigationScreen()),
               );
             },
-            child: Container(
-              height: 400,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color.fromARGB(255, 114, 206, 146),
-                    Color.fromARGB(255, 132, 192, 230)
-                  ],
+            child: Column(
+              children: [
+                Container(
+                  height: 400,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color.fromARGB(255, 114, 206, 146),
+                        Color.fromARGB(255, 132, 192, 230)
+                      ],
+                    ),
+                  ),
+                  child: Center(
+                      child: Text(
+                    "Click Here to start detection",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w500),
+                  )),
                 ),
-              ),
-              child: Center(
-                  child: Text(
-                "Click Here",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w500),
-              )),
+              ],
             ),
           )
         ],
