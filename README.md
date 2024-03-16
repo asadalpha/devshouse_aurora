@@ -16,7 +16,15 @@ Aurora is a mobile application built using Flutter that aims to provide navigati
 - **Google ML Kit**: Google ML Kit provides pre-trained machine learning models for object detection and other computer vision tasks.
 - **Firebase**: Firebase is utilized for backend services such as real-time database, authentication, and cloud functions for navigation assistance.
 
-## Getting Started
+## Future Scopes
+- Integration with Wearable Devices: As wearable technology advances, integrating Aurora with devices like smart glasses or wearable sensors can offer even greater convenience and independence to visually impaired users. These devices can provide real-time feedback on their surroundings without needing to hold a smartphone.
+- Multi-Language Support: Expanding language support beyond English can make the app accessible to a broader audience globally. This can involve translating both the user interface and the object detection descriptions into multiple languages.
+
+## Business Model
+- Freemium Model: Offer a basic version of the app for free, with limited features such as basic object detection and navigation assistance. Premium features like advanced object detection, offline navigation, and personalized assistance can be unlocked through a subscription model.
+- Corporate Partnerships: Forge partnerships with companies and organizations that cater to visually impaired individuals, such as blind associations, rehabilitation centers, or assistive technology providers. Offer customized versions of the app tailored to their specific needs and provide training and support services.
+
+## Setup
 
 To run the Aurora app locally, follow these steps:
 
