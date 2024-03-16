@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aurora/painter/coordinates.dart';
 import 'package:aurora/painter/detectorView.dart';
 import 'package:aurora/tts_service.dart';
 import 'package:camera/camera.dart';
@@ -8,12 +9,12 @@ import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart
 import 'painter/objectPainter.dart';
 import 'utils/utils.dart';
 
-class ObjectDetectorView extends StatefulWidget {
+class NavigationScreen extends StatefulWidget {
   @override
-  State<ObjectDetectorView> createState() => _ObjectDetectorView();
+  State<NavigationScreen> createState() => _ObjectDetectorView();
 }
 
-class _ObjectDetectorView extends State<ObjectDetectorView> {
+class _ObjectDetectorView extends State<NavigationScreen> {
   ObjectDetector? _objectDetector;
   DetectionMode _mode = DetectionMode.stream;
   bool _canProcess = false;
@@ -23,6 +24,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
   String? _text;
   var _cameraLensDirection = CameraLensDirection.back;
   int _option = 0;
+  int count = 0;
   List<String> _detectedObjectNames = [];
   final TTSService _ttsService = TTSService(); //
   final _options = {
@@ -31,16 +33,15 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
   };
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(milliseconds: 1500), (_) {
+    _timer = Timer.periodic(Duration(milliseconds: 2000), (_) {
       _speakDetectedObjects();
     });
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _startTimer();
+    // _startTimer();
   }
 
   void _speakDetectedObjects() {
@@ -48,12 +49,10 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
       final distinctObjectNames = _detectedObjectNames.toSet().toList();
       _detectedObjectNames = distinctObjectNames;
       final detectedObjectsString = _detectedObjectNames.join(', ');
-      _speak(detectedObjectsString);
+      _ttsService.setAwaitOptions();
+      _ttsService.speak(detectedObjectsString);
+      count = 0;
     }
-  }
-
-  void _speak(String text) {
-    _ttsService.speak(text);
   }
 
   @override
@@ -152,7 +151,7 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
       final options = ObjectDetectorOptions(
         mode: _mode,
         classifyObjects: true,
-        multipleObjects: true,
+        multipleObjects: false,
       );
       _objectDetector = ObjectDetector(options: options);
     } else if (_option > 0 && _option <= _options.length) {
@@ -183,15 +182,65 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     });
 
     final objects = await _objectDetector!.processImage(inputImage);
+    final centerX = inputImage.metadata!.size.width / 2;
+    const centerOffset = 300.0;
+    bool moveLeft = false;
+    bool moveRight = false;
 
     for (final object in objects) {
+      final left = translateX(
+          object.boundingBox.left,
+          inputImage.metadata!.size,
+          inputImage.metadata!.size,
+          inputImage.metadata!.rotation,
+          _cameraLensDirection);
+      final right = translateX(
+          object.boundingBox.right,
+          inputImage.metadata!.size,
+          inputImage.metadata!.size,
+          inputImage.metadata!.rotation,
+          _cameraLensDirection);
+
+      final objectCenterX = (left + right) / 2;
+      final isLeftOfCenter = objectCenterX < centerX - centerOffset;
+      final isRightOfCenter = objectCenterX > centerX + centerOffset;
+      var location = isLeftOfCenter
+          ? 'left'
+          : isRightOfCenter
+              ? 'right'
+              : 'front';
+
+      // Check if object is significantly to the left or right
+      if (objectCenterX < centerX - centerOffset) {
+        moveLeft = true;
+      } else if (objectCenterX > centerX + centerOffset) {
+        moveRight = true;
+      } else {
+        _ttsService.setAwaitOptions();
+        _ttsService.speak("Objects in front of you .");
+      }
+
       if (object.labels.isNotEmpty) {
-        final label =
-            object.labels.reduce((a, b) => a.confidence > b.confidence ? a : b);
-        _detectedObjectNames.add(label.text);
+        DetectedObject? maxObject = getObjectWithHighestConfidence(objects);
+
+        final label = maxObject!.labels
+            .reduce((a, b) => a.confidence > b.confidence ? a : b);
+        print(" confidence" + label.confidence.toString());
+        if (label.confidence > 0.60) {
+          _detectedObjectNames.add('${label.text} on your $location ');
+        }
       }
     }
-
+    if (moveLeft && moveRight) {
+      _ttsService.setAwaitOptions();
+      _ttsService.speak("Objects detected on both sides.");
+    } else if (moveLeft) {
+      _ttsService.setAwaitOptions();
+      _ttsService.speak("Object detected on your left. ");
+    } else if (moveRight) {
+      _ttsService.setAwaitOptions();
+      _ttsService.speak("Object detected on your right. ");
+    }
     print('Objects found: ${objects}\n\n');
 
     if (inputImage.metadata?.size != null &&
@@ -214,8 +263,30 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
       _customPaint = null;
     }
     _isBusy = false;
+
     if (mounted) {
       setState(() {});
     }
   }
+}
+
+DetectedObject? getObjectWithHighestConfidence(List<DetectedObject> objects) {
+  if (objects.isEmpty) {
+    return null;
+  }
+
+  DetectedObject? maxObject;
+  double maxConfidence = double.negativeInfinity;
+
+  for (DetectedObject object in objects) {
+    if (object.labels.isNotEmpty) {
+      double confidence = object.labels.first.confidence;
+      if (confidence > maxConfidence) {
+        maxConfidence = confidence;
+        maxObject = object;
+      }
+    }
+  }
+
+  return maxObject;
 }
