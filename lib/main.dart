@@ -1,3 +1,4 @@
+import 'package:aurora/document/TextDetectorScreen.dart';
 import 'package:aurora/home.dart';
 import 'package:aurora/objectDetectScreen.dart';
 import 'package:aurora/pages/homescreen.dart';

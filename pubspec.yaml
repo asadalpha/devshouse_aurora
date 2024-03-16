@@ -46,10 +46,11 @@ dependencies:
   google_mlkit_text_recognition: ^0.11.0
   music_visualizer: ^1.0.4
   provider: ^6.0.5
+  http: ^1.2.1
+  dart_openai: ^5.1.0
+  google_generative_ai: ^0.2.2
+  audioplayers: ^5.2.1
 
-  provider: ^6.0.5
-
-  music_visualizer: ^1.0.4
   
 
 

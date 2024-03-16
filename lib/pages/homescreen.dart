@@ -61,12 +61,11 @@ class _TextAnimationState extends State<TextAnimation>
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
     _controller.forward();
 
-    // Navigate to a new screen after 4 seconds
-    // Future.delayed(const Duration(seconds: 6), () {
-    //   Navigator.of(context).pushReplacement(
-    //     MaterialPageRoute(builder: (context) => Screen1()),
-    //   );
-    // });
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => Screen1()),
+      );
+    });
   }
 
   @override
