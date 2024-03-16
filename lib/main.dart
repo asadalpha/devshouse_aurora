@@ -1,7 +1,4 @@
-import 'package:aurora/home.dart';
-import 'package:aurora/objectDetectScreen.dart';
 import 'package:aurora/pages/homescreen.dart';
-import 'package:aurora/pages/newpagge.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
