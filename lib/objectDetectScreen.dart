@@ -8,12 +8,12 @@ import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart
 import 'painter/objectPainter.dart';
 import 'utils/utils.dart';
 
-class ObjectDetectorView extends StatefulWidget {
+class NavigationScreen extends StatefulWidget {
   @override
-  State<ObjectDetectorView> createState() => _ObjectDetectorView();
+  State<NavigationScreen> createState() => _ObjectDetectorView();
 }
 
-class _ObjectDetectorView extends State<ObjectDetectorView> {
+class _ObjectDetectorView extends State<NavigationScreen> {
   ObjectDetector? _objectDetector;
   DetectionMode _mode = DetectionMode.stream;
   bool _canProcess = false;
