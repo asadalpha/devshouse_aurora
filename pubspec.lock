@@ -297,7 +297,7 @@ packages:
     source: hosted
     version: "0.9.0"
   google_mlkit_text_recognition:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_mlkit_text_recognition
       sha256: d484de2a10961a6f0ff8b54cc92b71bfbb0e65509be0903edca0e1f9256ca4c2
@@ -432,6 +432,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  music_visualizer:
+    dependency: "direct main"
+    description:
+      name: music_visualizer
+      sha256: d0eafdbe052021c7b2a2b3e1c87cc163e7262410a47246d570c568ad56935096
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
 
   nested:
     dependency: transitive

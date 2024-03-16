@@ -43,6 +43,9 @@ dependencies:
   path_provider: ^2.1.0
   google_ml_kit: ^0.16.3
   image_picker: ^1.0.2
+  google_mlkit_text_recognition: ^0.11.0
+  music_visualizer: ^1.0.4
+  provider: ^6.0.5
 
   provider: ^6.0.5
 
