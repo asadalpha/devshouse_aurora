@@ -1,12 +1,12 @@
 # Aurora
 
-BlindAssist is a mobile application built using Flutter that aims to provide navigation assistance and object detection for visually impaired individuals. The app leverages the power of TensorFlow, Google ML Kit, and Firebase to deliver an accessible and user-friendly experience.
+Aurora is a mobile application built using Flutter that aims to provide navigation assistance and object detection for visually impaired individuals. The app leverages the power of TensorFlow, Google ML Kit, and Firebase to deliver an accessible and user-friendly experience. We have implemented a minimal user interface for everyone to try our app for a better cause and a better tomorrow.
 
 ## Features
 
 - **Object Detection**: Utilizing Google ML Kit's object detection capabilities, the app can identify and describe various objects in the user's surroundings, providing crucial information about their environment.
-- **Navigation Assistance**: With the integration of Firebase, BlindAssist offers turn-by-turn navigation instructions, helping users navigate through indoor and outdoor spaces safely and efficiently.
-- **Voice Commands**: The app supports voice commands, allowing users to interact with the application hands-free.
+- **Navigation Assistance**: With the integration of Firebase, Aurora offers navigation instructions, helping users navigate through indoor spaces.
+- **Voice Commands**: The app supports voice feedback, allowing users to interact with the application.
 - **Accessible Design**: The user interface is designed with accessibility in mind, ensuring a seamless experience for visually impaired users.
 
 ## Tech Stack
@@ -18,6 +18,10 @@ BlindAssist is a mobile application built using Flutter that aims to provide nav
 
 ## Getting Started
 
-To run the BlindAssist app locally, follow these steps:
+To run the Aurora app locally, follow these steps:
 
 1. Clone the repository:
+2. Navigate to the cloned directory:
+3. Run flutter pub get:
+4. Run flutter run:
+
