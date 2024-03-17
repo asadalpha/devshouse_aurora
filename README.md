@@ -1,7 +1,7 @@
 # Aurora
 
-![Banner]([https://example.com/path/to/your/banner/image.png](https://img.freepik.com/free-photo/metaverse-avatar-collage-concept_52683-96429.jpg?w=996&t=st=1710648001~exp=1710648601~hmac=f6ee6a3fe2a4bb9a7f31a829555a6efee5dcecb45d3a488af74d29d824212223))
 
+<img src="https://img.freepik.com/free-photo/metaverse-avatar-collage-concept_52683-96429.jpg?w=996&t=st=1710648001~exp=1710648601~hmac=f6ee6a3fe2a4bb9a7f31a829555a6efee5dcecb45d3a488af74d29d824212223" alt="Banner">
 
 
 
