@@ -1,11 +1,11 @@
 # Aurora
 
+Aurora is a mobile application built using Flutter that aims to provide navigation assistance and object detection for visually impaired individuals. The app leverages the power of TensorFlow, Google ML Kit, and Firebase to deliver an accessible and user-friendly experience. We have implemented a minimal user interface for everyone to try our app for a better cause and a better tomorrow.
 
 <img src="https://img.freepik.com/free-photo/metaverse-avatar-collage-concept_52683-96429.jpg?w=996&t=st=1710648001~exp=1710648601~hmac=f6ee6a3fe2a4bb9a7f31a829555a6efee5dcecb45d3a488af74d29d824212223" alt="Banner">
 
 
 
-Aurora is a mobile application built using Flutter that aims to provide navigation assistance and object detection for visually impaired individuals. The app leverages the power of TensorFlow, Google ML Kit, and Firebase to deliver an accessible and user-friendly experience. We have implemented a minimal user interface for everyone to try our app for a better cause and a better tomorrow.
 
 ## Features
 
