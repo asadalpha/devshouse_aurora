@@ -5,7 +5,7 @@ class VolumeController extends StatelessWidget {
   final Function() volumeUpCallback;
   final Function() volumeDownCallback;
 
-  VolumeController(this.volumeUpCallback, this.volumeDownCallback);
+  const VolumeController(this.volumeUpCallback, this.volumeDownCallback, {super.key});
 
   @override
   Widget build(BuildContext context) {

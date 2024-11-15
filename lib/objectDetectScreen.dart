@@ -10,6 +10,8 @@ import 'painter/objectPainter.dart';
 import 'utils/utils.dart';
 
 class NavigationScreen extends StatefulWidget {
+  const NavigationScreen({super.key});
+
   @override
   State<NavigationScreen> createState() => _ObjectDetectorView();
 }
@@ -33,7 +35,9 @@ class _ObjectDetectorView extends State<NavigationScreen> {
   };
 
   void _startTimer() {
+
     _timer = Timer.periodic(Duration(milliseconds: 500), (_) {
+
       _speakDetectedObjects();
     });
   }
@@ -83,7 +87,7 @@ class _ObjectDetectorView extends State<NavigationScreen> {
             right: 100,
             child: Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 Container(
                     decoration: BoxDecoration(
                       color: Colors.black54,
@@ -93,7 +97,7 @@ class _ObjectDetectorView extends State<NavigationScreen> {
                       padding: const EdgeInsets.all(4.0),
                       child: _buildDropdown(),
                     )),
-                Spacer(),
+                const Spacer(),
               ],
             )),
       ]),
