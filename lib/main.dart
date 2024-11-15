@@ -1,5 +1,8 @@
-import 'package:aurora/pages/homescreen.dart';
-import 'package:flutter/material.dart';
+
+import 'package:aurora/document/TextDetectorScreen.dart';
+import 'package:aurora/home.dart';
+import 'package:aurora/objectDetectScreen.dart';
+
 
 void main() {
   runApp(const MyApp());

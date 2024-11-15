@@ -61,7 +61,9 @@ class _TextAnimationState extends State<TextAnimation>
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
     _controller.forward();
 
-    Future.delayed(const Duration(seconds: 6), () {
+
+    Future.delayed(const Duration(seconds: 3), () {
+
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => Screen1()),
       );

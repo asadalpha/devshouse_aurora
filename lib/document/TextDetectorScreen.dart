@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'package:google_generative_ai/google_generative_ai.dart';
+
+import 'package:aurora/secrets.dart';
 import 'package:aurora/tts_service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 Future getImageTotext(final imagePath) async {
   final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
@@ -20,12 +25,13 @@ class TextDetector extends StatefulWidget {
 }
 
 late String s = "";
+String _summary = '';
 
 final TTSService flutterTts = TTSService();
 
 class _TextDetectorState extends State<TextDetector> {
-  void speak() {
-    flutterTts.speak(s);
+  void speak(String ins) {
+    flutterTts.speak(ins);
   }
 
   @override
@@ -48,8 +54,8 @@ class _TextDetectorState extends State<TextDetector> {
 
             setState(() {
               s = a;
+              _summarize(s);
               print(s);
-              speak();
             });
           },
           child: Container(
@@ -78,5 +84,23 @@ class _TextDetectorState extends State<TextDetector> {
         ),
       ),
     );
+  }
+}
+
+Future<void> _summarize(String? article) async {
+  if (article == null) return;
+
+  try {
+    final model = GenerativeModel(model: 'gemini-pro', apiKey: API_KEY);
+    final content = [
+      Content.text('Summarise this article in less then 70 words. $article')
+    ];
+    final response = await model.generateContent(content);
+    if (response.text != null) {
+      flutterTts.speak(response.text!);
+    }
+    print(response.text);
+  } catch (e) {
+    print(e);
   }
 }

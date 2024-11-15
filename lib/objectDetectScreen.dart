@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:audioplayers/audioplayers.dart';
 import 'package:aurora/painter/coordinates.dart';
 import 'package:aurora/painter/detectorView.dart';
 import 'package:aurora/tts_service.dart';
@@ -36,8 +36,7 @@ class _ObjectDetectorView extends State<NavigationScreen> {
 
   void _startTimer() {
 
-
-    _timer = Timer.periodic(Duration(milliseconds: 2000), (_) {
+    _timer = Timer.periodic(Duration(milliseconds: 500), (_) {
 
       _speakDetectedObjects();
     });
@@ -46,7 +45,7 @@ class _ObjectDetectorView extends State<NavigationScreen> {
   @override
   void initState() {
     super.initState();
-    // _startTimer();
+    _startTimer();
   }
 
   void _speakDetectedObjects() {
@@ -156,7 +155,7 @@ class _ObjectDetectorView extends State<NavigationScreen> {
       final options = ObjectDetectorOptions(
         mode: _mode,
         classifyObjects: true,
-        multipleObjects: false,
+        multipleObjects: true,
       );
       _objectDetector = ObjectDetector(options: options);
     } else if (_option > 0 && _option <= _options.length) {
@@ -191,7 +190,7 @@ class _ObjectDetectorView extends State<NavigationScreen> {
     const centerOffset = 300.0;
     bool moveLeft = false;
     bool moveRight = false;
-
+    var objectt = '';
     for (final object in objects) {
       final left = translateX(
           object.boundingBox.left,
@@ -221,8 +220,8 @@ class _ObjectDetectorView extends State<NavigationScreen> {
       } else if (objectCenterX > centerX + centerOffset) {
         moveRight = true;
       } else {
-        _ttsService.setAwaitOptions();
-        _ttsService.speak("Objects in front of you .");
+        // _ttsService.setAwaitOptions();
+        // _ttsService.speak("Objects in front of you .");
       }
 
       if (object.labels.isNotEmpty) {
@@ -230,22 +229,28 @@ class _ObjectDetectorView extends State<NavigationScreen> {
 
         final label = maxObject!.labels
             .reduce((a, b) => a.confidence > b.confidence ? a : b);
+        objectt = label.text;
         print(" confidence" + label.confidence.toString());
-        if (label.confidence > 0.60) {
-          _detectedObjectNames.add('${label.text} on your $location ');
+        if (moveLeft && moveRight) {
+          location = 'front';
+        } else if (moveLeft) {
+          location = 'left';
+        } else if (moveRight) {
+          location = 'right';
         }
+        _detectedObjectNames.add('${label.text} on your $location ');
       }
     }
-    if (moveLeft && moveRight) {
-      _ttsService.setAwaitOptions();
-      _ttsService.speak("Objects detected on both sides.");
-    } else if (moveLeft) {
-      _ttsService.setAwaitOptions();
-      _ttsService.speak("Object detected on your left. ");
-    } else if (moveRight) {
-      _ttsService.setAwaitOptions();
-      _ttsService.speak("Object detected on your right. ");
-    }
+    // if (moveLeft && moveRight) {
+    //   _ttsService.setAwaitOptions();
+    //   _ttsService.speak("$objectt detected on both sides.");
+    // } else if (moveLeft) {
+    //   _ttsService.setAwaitOptions();
+    //   _ttsService.speak("$objectt detected on your left. ");
+    // } else if (moveRight) {
+    //   _ttsService.setAwaitOptions();
+    //   _ttsService.speak("$objectt detected on your right. ");
+    // }
     print('Objects found: ${objects}\n\n');
 
     if (inputImage.metadata?.size != null &&
